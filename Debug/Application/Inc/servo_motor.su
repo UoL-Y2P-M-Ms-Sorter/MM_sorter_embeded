@@ -1,0 +1,2 @@
+../Application/Inc/servo_motor.c:8:6:servo_motor_task	16	static
+../Application/Inc/servo_motor.c:19:6:servo_motor_angleset	24	static

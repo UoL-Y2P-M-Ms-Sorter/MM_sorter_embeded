@@ -1,0 +1,2 @@
+../Application/Inc/step_motor.c:6:6:step_motor_task	16	static
+../Application/Inc/step_motor.c:15:6:step_motor_speedset	24	static
