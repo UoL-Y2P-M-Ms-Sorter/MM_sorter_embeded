@@ -50,9 +50,9 @@
 									<listOptionValue builtIn="false" value="../Middlewares/Third_Party/FreeRTOS/Source/include"/>
 									<listOptionValue builtIn="false" value="../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2"/>
 									<listOptionValue builtIn="false" value="../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F"/>
-									<listOptionValue builtIn="false" value="&quot;C:\Users\grasspeople\OneDrive - The University of Liverpool\STM32workspace\MM_Sorter_New\Application&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;C:\Users\grasspeople\OneDrive - The University of Liverpool\STM32workspace\MM_Sorter_New\Application\Inc&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;C:\Users\grasspeople\OneDrive - The University of Liverpool\STM32workspace\MM_Sorter_New\Application\Src&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/MM_Sorter_New/Application/Src}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/MM_Sorter_New/Application}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/MM_Sorter_New/Application/Inc}&quot;"/>
 								</option>
 								<inputType id="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.c.compiler.input.c.951561592" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.c.compiler.input.c"/>
 							</tool>
@@ -203,4 +203,5 @@
 			<autodiscovery enabled="false" problemReportingEnabled="true" selectedProfileId=""/>
 		</scannerConfigBuildInfo>
 	</storageModule>
+	<storageModule moduleId="refreshScope"/>
 </cproject>
