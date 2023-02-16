@@ -1,5 +1,5 @@
 
-MM_Sorter_New.elf:     file format elf32-littlearm
+MM_sorter_embeded.elf:     file format elf32-littlearm
 
 Sections:
 Idx Name          Size      VMA       LMA       File off  Algn
@@ -37,13 +37,13 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   CONTENTS, READONLY, DEBUGGING, OCTETS
  16 .debug_macro  000199ed  00000000  00000000  00044d38  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 17 .debug_line   0001cd08  00000000  00000000  0005e725  2**0
+ 17 .debug_line   0001cd18  00000000  00000000  0005e725  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 18 .debug_str    00099c82  00000000  00000000  0007b42d  2**0
+ 18 .debug_str    00099c86  00000000  00000000  0007b43d  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 19 .comment      00000050  00000000  00000000  001150af  2**0
+ 19 .comment      00000050  00000000  00000000  001150c3  2**0
                   CONTENTS, READONLY
- 20 .debug_frame  0000668c  00000000  00000000  00115100  2**2
+ 20 .debug_frame  0000668c  00000000  00000000  00115114  2**2
                   CONTENTS, READONLY, DEBUGGING, OCTETS
 
 Disassembly of section .text:

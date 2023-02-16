@@ -1,5 +1,5 @@
 Application/Inc/servo_motor.o: ../Application/Inc/servo_motor.c \
- C:/Users/grasspeople/OneDrive\ -\ The\ University\ of\ Liverpool/STM32workspace/MM_Sorter_New/Application/Src/servo_motor.h \
+ C:/Users/grasspeople/OneDrive\ -\ The\ University\ of\ Liverpool/STM32workspace/MM_sorter_embeded/Application/Src/servo_motor.h \
  ../Core/Inc/main.h ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h \
  ../Core/Inc/stm32f4xx_hal_conf.h \
  ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_rcc.h \
@@ -41,7 +41,7 @@ Application/Inc/servo_motor.o: ../Application/Inc/servo_motor.c \
  ../Middlewares/Third_Party/FreeRTOS/Source/include/task.h \
  ../Middlewares/Third_Party/FreeRTOS/Source/include/list.h \
  ../Core/Inc/tim.h ../Core/Inc/main.h
-C:/Users/grasspeople/OneDrive\ -\ The\ University\ of\ Liverpool/STM32workspace/MM_Sorter_New/Application/Src/servo_motor.h:
+C:/Users/grasspeople/OneDrive\ -\ The\ University\ of\ Liverpool/STM32workspace/MM_sorter_embeded/Application/Src/servo_motor.h:
 ../Core/Inc/main.h:
 ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h:
 ../Core/Inc/stm32f4xx_hal_conf.h:
