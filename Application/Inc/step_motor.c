@@ -2,19 +2,21 @@
 #include "main.h"
 #include "freertos.h"
 #include "task.h"
+#define STEP_MOTOR_ROTATION_SPEED 1000;
+#define SERVO_MOTOR_DIVIDE_ANGLE 60
 void step_motor_speedset(int speed);
 sorter_state_t sorter_state;
-void step_motor_speed_set();
+void calc_step_motor_speed();
 void sorter_mode_set();
 void step_motor_task(void *argument)
 {
 	sorter_state.working_mode = STOP;
 	sorter_state.sorting_mode = PICK_SUGER;
-
+	sorter_state.MMs_COLOR = NO_COLOR;
 	while(1)
 	{
 		sorter_mode_set();
-		step_motor_speed_set();
+		calc_step_motor_speed();
 		step_motor_speedset(sorter_state.step_motor_speed);
 
 	}
@@ -22,9 +24,16 @@ void step_motor_task(void *argument)
 
 void sorter_mode_set()
 {
+	if(sorter_state.sorting_mode == PICK_SUGER)
+	{
+/*		if(HAL_GPIO_WritePin(GPIOx, GPIO_Pin, PinState))
+		{
+			sorter_state.sorting_mode = CLASSIFY;
+		}*/
 
+	}
 }
-void step_motor_speed_set()
+void calc_step_motor_speed()
 {
 	if(sorter_state.working_mode == STOP)
 	{
@@ -39,7 +48,31 @@ void step_motor_speed_set()
 		}
 		else
 		{
-
+			switch (sorter_state.MMs_COLOR)
+			{
+			case NO_COLOR:
+				sorter_state.step_motor_speed = 0;
+				break;
+			case BLUE:
+				sorter_state.step_motor_speed = STEP_MOTOR_ROTATION_SPEED;
+				sorter_state.servo_motor_angle = SERVO_MOTOR_DIVIDE_ANGLE;
+				break;
+			case BROWN:
+				sorter_state.step_motor_speed = STEP_MOTOR_ROTATION_SPEED;
+				sorter_state.servo_motor_angle = 0;
+			case GREEN:
+				sorter_state.step_motor_speed = STEP_MOTOR_ROTATION_SPEED;
+				sorter_state.servo_motor_angle = -SERVO_MOTOR_DIVIDE_ANGLE;
+			case ORANGE:
+				sorter_state.step_motor_speed = -STEP_MOTOR_ROTATION_SPEED;
+				sorter_state.servo_motor_angle = SERVO_MOTOR_DIVIDE_ANGLE;
+			case RED:
+				sorter_state.step_motor_speed = -STEP_MOTOR_ROTATION_SPEED;
+				sorter_state.servo_motor_angle = 0;
+			case YELLOW:
+				sorter_state.step_motor_speed = -STEP_MOTOR_ROTATION_SPEED;
+				sorter_state.servo_motor_angle = -SERVO_MOTOR_DIVIDE_ANGLE;
+			}
 		}
 	}
 }
