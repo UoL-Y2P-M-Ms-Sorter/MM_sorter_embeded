@@ -3,14 +3,46 @@
 #include "freertos.h"
 #include "task.h"
 void step_motor_speedset(int speed);
+sorter_state_t sorter_state;
+void step_motor_speed_set();
+void sorter_mode_set();
 void step_motor_task(void *argument)
 {
+	sorter_state.working_mode = STOP;
+	sorter_state.sorting_mode = PICK_SUGER;
+
 	while(1)
 	{
-		step_motor_speedset(-1000);
+		sorter_mode_set();
+		step_motor_speed_set();
+		step_motor_speedset(sorter_state.step_motor_speed);
+
 	}
 }
 
+void sorter_mode_set()
+{
+
+}
+void step_motor_speed_set()
+{
+	if(sorter_state.working_mode == STOP)
+	{
+		sorter_state.step_motor_speed = 0;
+		return;
+	}
+	if(sorter_state.working_mode == RUN)
+	{
+		if(sorter_state.sorting_mode == PICK_SUGER)
+		{
+
+		}
+		else
+		{
+
+		}
+	}
+}
 
 void step_motor_speedset(int speed)
 {
