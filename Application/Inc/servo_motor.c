@@ -11,7 +11,6 @@ void servo_motor_task(void *argument)
 	while(1)
 	{
 		servo_motor_angleset(angle);
-
 	}
 }
 
