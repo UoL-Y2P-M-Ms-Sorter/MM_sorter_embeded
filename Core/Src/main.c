@@ -41,6 +41,7 @@ void servo_motor_task(void *argument);
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
 uint8_t rx_data[8];
+int16_t tim_step_speed = 0;
 /* USER CODE END PD */
 
 /* Private macro -------------------------------------------------------------*/
@@ -190,7 +191,60 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
     HAL_IncTick();
   }
   /* USER CODE BEGIN Callback 1 */
+  if(htim->Instance == TIM11)
+  		{
+  			static uint16_t step = 0;
 
+  			if(tim_step_speed != 0)
+  			{
+  				if(tim_step_speed > 0)
+  				{
+  					step++;
+  				}
+  				else
+  				{
+  					step--;
+  				}
+			step = step % 8;
+  				 switch(step)
+  				   {
+  				   case 0 :
+  					   HAL_GPIO_WritePin(GPIOC, GPIO_PIN_1, GPIO_PIN_RESET);//reset D
+  					   break;
+
+  				   case 1:
+  					   HAL_GPIO_WritePin(GPIOA, GPIO_PIN_4, GPIO_PIN_SET);//AB (set B)
+  				      break;
+
+  				   case 2 :
+  					   HAL_GPIO_WritePin(GPIOA, GPIO_PIN_1, GPIO_PIN_RESET);//B (reset A)
+  					   break;
+
+  				   case 3:
+  					   HAL_GPIO_WritePin(GPIOB, GPIO_PIN_0, GPIO_PIN_SET);//BC (set C)
+  					   break;
+
+  				   case 4 :
+  					   HAL_GPIO_WritePin(GPIOA, GPIO_PIN_4, GPIO_PIN_RESET);//C (reset B)
+  				   	   break;
+
+  				   case 5:
+  				   	   HAL_GPIO_WritePin(GPIOC, GPIO_PIN_1, GPIO_PIN_SET);//CD (set D)
+  				   	   break;
+
+  				   case 6 :
+  				   	   HAL_GPIO_WritePin(GPIOB, GPIO_PIN_0, GPIO_PIN_RESET);//D (reset C)
+  				   	   break;
+
+  				   case 7:
+  				   	   HAL_GPIO_WritePin(GPIOA, GPIO_PIN_1, GPIO_PIN_SET);//DA
+  				   	   break;
+  				   default:
+  					   break;
+  				   }
+  			}
+
+  	}
   /* USER CODE END Callback 1 */
 }
 

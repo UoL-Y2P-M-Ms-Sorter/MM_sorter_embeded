@@ -2,10 +2,17 @@
 #include "main.h"
 #include "freertos.h"
 #include "task.h"
+#include "tim.h"
 #define STEP_MOTOR_ROTATION_SPEED 1000;
 #define SERVO_MOTOR_DIVIDE_ANGLE 60
+extern int16_t tim_step_speed;
+extern TIM_HandleTypeDef htim11;
+int16_t speed_test=0;
 void step_motor_speedset(int speed);
+
+
 sorter_state_t sorter_state;
+
 void calc_step_motor_speed();
 void sorter_mode_set();
 void step_motor_task(void *argument)
@@ -13,12 +20,13 @@ void step_motor_task(void *argument)
 	sorter_state.working_mode = STOP;
 	sorter_state.sorting_mode = PICK_SUGER;
 	sorter_state.MMs_COLOR = NO_COLOR;
+
 	while(1)
 	{
 		sorter_mode_set();
 		calc_step_motor_speed();
-		step_motor_speedset(sorter_state.step_motor_speed);
-
+		step_motor_speedset(speed_test);
+		vTaskDelay(1);
 	}
 }
 
@@ -79,50 +87,16 @@ void calc_step_motor_speed()
 
 void step_motor_speedset(int speed)
 {
-		if(speed > 0)
-		{
-			uint16_t t = 1000/speed;
-			//A->PA1  B-PA4  C->PB0  D->PC1
-			HAL_GPIO_WritePin(GPIOA, GPIO_PIN_1, GPIO_PIN_SET);//A
-			vTaskDelay (t);
-			HAL_GPIO_WritePin(GPIOA, GPIO_PIN_4, GPIO_PIN_SET);//AB (set B)
-			vTaskDelay (t);
-			HAL_GPIO_WritePin(GPIOA, GPIO_PIN_1, GPIO_PIN_RESET);//B (reset A)
-			vTaskDelay (t);
-			HAL_GPIO_WritePin(GPIOB, GPIO_PIN_0, GPIO_PIN_SET);//BC (set C)
-			vTaskDelay (t);
-			HAL_GPIO_WritePin(GPIOA, GPIO_PIN_4, GPIO_PIN_RESET);//C (reset B)
-			vTaskDelay (t);
-			HAL_GPIO_WritePin(GPIOC, GPIO_PIN_1, GPIO_PIN_SET);//CD (set D)
-			vTaskDelay (t);
-			HAL_GPIO_WritePin(GPIOB, GPIO_PIN_0, GPIO_PIN_RESET);//D (reset C)
-			vTaskDelay (t);
-			HAL_GPIO_WritePin(GPIOA, GPIO_PIN_1, GPIO_PIN_SET);//DA
-			vTaskDelay (t);
-			HAL_GPIO_WritePin(GPIOC, GPIO_PIN_1, GPIO_PIN_RESET);//A
-			vTaskDelay (t);
-		}
-		else
-		{
-			uint16_t t = -1000/speed;
-			HAL_GPIO_WritePin(GPIOA, GPIO_PIN_1, GPIO_PIN_SET);//A
-			vTaskDelay (t);
-			HAL_GPIO_WritePin(GPIOC, GPIO_PIN_1, GPIO_PIN_SET);//DA
-			vTaskDelay (t);
-			HAL_GPIO_WritePin(GPIOA, GPIO_PIN_1, GPIO_PIN_RESET);//D (reset A)
-			vTaskDelay (t);
-			HAL_GPIO_WritePin(GPIOB, GPIO_PIN_0, GPIO_PIN_SET);//CD (set C)
-			vTaskDelay (t);
-			HAL_GPIO_WritePin(GPIOC, GPIO_PIN_1, GPIO_PIN_RESET);//C (reset D)
-			vTaskDelay (t);
-			HAL_GPIO_WritePin(GPIOA, GPIO_PIN_4, GPIO_PIN_SET);//BC (set B)
-			vTaskDelay (t);
-			HAL_GPIO_WritePin(GPIOB, GPIO_PIN_0, GPIO_PIN_RESET);//B (reset C)
-			vTaskDelay (t);
-			HAL_GPIO_WritePin(GPIOA, GPIO_PIN_1, GPIO_PIN_SET);//AB (set A)
-			vTaskDelay (t);
-			HAL_GPIO_WritePin(GPIOA, GPIO_PIN_4, GPIO_PIN_RESET);//A (reset B)
-			vTaskDelay (t);
-
-		}
+	tim_step_speed = speed;
+	uint16_t frequency;
+	if(speed < 0){
+		speed = -speed;
+	}
+	else if (speed == 0){
+		HAL_TIM_Base_Stop_IT(&htim11);
+		return;
+	}
+	frequency = (6 * speed * 64)/5.625;
+	__HAL_TIM_SET_PRESCALER(&htim11,(2400/frequency)-1);
+	HAL_TIM_Base_Start_IT(&htim11);
 }
