@@ -4,7 +4,7 @@
 #include "task.h"
 #include "usart.h"
 #include "tim.h"
-#define STEP_MOTOR_ROTATION_SPEED 1000;
+#define STEP_MOTOR_ROTATION_SPEED 10;
 #define SERVO_MOTOR_DIVIDE_ANGLE 60
 extern int16_t tim_step_speed;
 extern TIM_HandleTypeDef htim11;
@@ -38,11 +38,12 @@ void sorter_mode_set()
 	{
 		if(sorter_state.sorting_mode == PICK_SUGER)
 		{
-	/*		if(HAL_GPIO_WritePin(GPIOx, GPIO_Pin, PinState))
+			if(HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_8))
 			{
 				sorter_state.sorting_mode = CLASSIFY;
+				HAL_TIM_Base_Start_IT(&htim4);
 			}
-	*/
+
 		}
 	}
 	else if(sorter_state.working_mode == SAMPLE)
@@ -117,6 +118,17 @@ void sorter_sample_mode_speed_set()
 	if(sorter_state.sorting_mode == PICK_SUGER)
 	{
 
+	}
+	if(sorter_state.sorting_mode == CLASSIFY)
+	{
+		if(sorter_state.MMs_COLOR<3)
+		{
+
+		}
+		else
+		{
+
+		}
 	}
 
 }

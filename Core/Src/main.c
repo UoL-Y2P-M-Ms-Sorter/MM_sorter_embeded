@@ -42,6 +42,7 @@ void servo_motor_task(void *argument);
 /* USER CODE BEGIN PD */
 uint8_t rx_data[8];
 int16_t tim_step_speed = 0;
+extern sorter_state_t sorter_state;
 /* USER CODE END PD */
 
 /* Private macro -------------------------------------------------------------*/
@@ -191,10 +192,9 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
     HAL_IncTick();
   }
   /* USER CODE BEGIN Callback 1 */
-  if(htim->Instance == TIM11)
+  else if(htim->Instance == TIM11)
   		{
   			static uint16_t step = 0;
-
   			if(tim_step_speed != 0)
   			{
   				if(tim_step_speed > 0)
@@ -245,6 +245,10 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
   			}
 
   	}
+  else if(htim->Instance == TIM4)
+  {
+	  sorter_state.sorting_mode = PICK_SUGER;
+  }
   /* USER CODE END Callback 1 */
 }
 
