@@ -11,7 +11,9 @@ typedef  enum {
 
 typedef  enum {
 	PICK_SUGER,
+	CHOOSE_COLOR,
 	CLASSIFY,
+
 }sorting_mode_e;
 typedef enum{
 	NO_COLOR,
