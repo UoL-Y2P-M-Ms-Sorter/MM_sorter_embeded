@@ -274,7 +274,6 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
 		}
 		else
 		{
-			sorter_state.sorting_mode = PICK_SUGER;
 			sorter_state.working_mode = STOP;
 		}
 	}
